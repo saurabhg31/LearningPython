@@ -61,9 +61,9 @@ def main():
     if reply == 'yes':
         print("\nChecking if all divisors are prime...\n")
         if arePrimes(divisors):
-            print("\nAll divisors are prime.\n")
+            print("All divisors are prime.")
         else:
-            print("\nAll divisors are not prime\n")
+            print("All divisors are not prime.")
     return True
 
 
