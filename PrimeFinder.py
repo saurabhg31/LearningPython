@@ -30,6 +30,15 @@ def isPrime(x, f=2):
                 f += 1
     return (x % f)
 
+# TODO: check why this method detects list of primes as not prime, called from line 63
+def arePrimes(numbers):
+    for number in numbers:
+        print("\nChecking if",number,"is prime")
+        if isPrime(number):
+            continue
+        else:
+            return False
+    return True
 
 def main():
     print('Program to calculate prime numbers in a given range (includes the range values itself).\n')
@@ -46,8 +55,15 @@ def main():
     print("Primes: \n")
     print(primes)
     print("\nDivisors in range: \n")
+    print(primeCount, " primes found\n")
     print(divisors)
-    print(primeCount, " primes found")
+    reply = input("\nCheck if all divisors are prime ? (yes/no): ")
+    if reply == 'yes':
+        print("\nChecking if all divisors are prime...\n")
+        if arePrimes(divisors):
+            print("\nAll divisors are prime.\n")
+        else:
+            print("\nAll divisors are not prime\n")
     return True
 
 
