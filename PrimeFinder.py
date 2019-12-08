@@ -30,12 +30,10 @@ def isPrime(x, f=2):
                 f += 1
     return (x % f)
 
-# TODO: check why this method detects list of primes as not prime, called from line 63
 def arePrimes(numbers):
     notPrimes = []
     primes = 0
     for number in numbers:
-        # print("\nChecking if",number,"is prime")
         if isPrime(number):
             primes += 1
         else:
