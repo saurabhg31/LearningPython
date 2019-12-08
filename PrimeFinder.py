@@ -33,7 +33,7 @@ def isPrime(x, f=2):
 # TODO: check why this method detects list of primes as not prime, called from line 63
 def arePrimes(numbers):
     for number in numbers:
-        print("\nChecking if",number,"is prime")
+        # print("\nChecking if",number,"is prime")
         if isPrime(number):
             continue
         else:
