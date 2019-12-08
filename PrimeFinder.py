@@ -51,11 +51,10 @@ def main():
             primeCount += 1
             primes.append(limit_low)
         limit_low += 1
-    print("\n")
     print("Primes: \n")
     print(primes)
-    print("\nDivisors in range: \n")
     print(primeCount, " primes found\n")
+    print("Divisors in range: \n")
     print(divisors)
     reply = input("\nCheck if all divisors are prime ? (yes/no): ")
     if reply == 'yes':
