@@ -60,13 +60,10 @@ def main():
     reply = input("\nCheck if all divisors are prime ? (yes/no): ")
     if reply == 'yes':
         print("\nChecking if all divisors are prime...\n")
-        # if arePrimes(divisors):
-        #     print("All divisors are prime.")
-        # else:
-        #     print("All divisors are not prime.")
         nonPrimeDivisors = arePrimes(divisors)
         print("Divisors that are not primes:\n")
         print(nonPrimeDivisors)
+    print("\nMax Divisor:",divisors[-1],"\n")
     return True
 
 while int(input("\nRun prime finding program ?\n1. Yes, 0. No\n")):
