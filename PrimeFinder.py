@@ -11,7 +11,6 @@ def isInt(x):
     except ValueError:
         return False
 
-
 def isPrime(x, f=2):
     if x == 2 or x == 3:
         return True
@@ -69,7 +68,6 @@ def main():
         print("Divisors that are not primes:\n")
         print(nonPrimeDivisors)
     return True
-
 
 while int(input("\nRun prime finding program ?\n1. Yes, 0. No\n")):
     ch = int(input("1. Detect if a number is prime\n2. Find prime numbers within a given range\n"))
