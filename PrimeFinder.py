@@ -4,6 +4,9 @@ import math
 
 divisors = []
 
+def formatNumber(number):
+    return "{:,.0f}".format(number)
+
 def isInt(x):
     try:
         int(x)
@@ -19,7 +22,7 @@ def isPrime(x, f=2):
     elif x > 2:
         while f <= math.ceil(math.sqrt(x)):
             if x % f == 0:
-                print("\n", x, " is divisible by ", f, "\n")
+                # print("\n", x, " is divisible by ", f, "\n")
                 try:
                     divisors.index(f)
                 except (ValueError, IndexError):
@@ -47,14 +50,21 @@ def main():
     primeCount = 0
     primes = []
     lowVal = limit_low
+    print("\nPrime numbers are as follows:\n")
     while limit_low <= limit_high:
         if isPrime(limit_low):
             primeCount += 1
             primes.append(limit_low)
+            print(formatNumber(limit_low), end=" ")
         limit_low += 1
-    print("Primes: \n")
-    print(primes)
-    print("\n",primeCount, " primes found in range [",lowVal,",",limit_high,"]\n")
+    print("\n")
+    print(formatNumber(primeCount), " primes found in range [",formatNumber(lowVal),",",formatNumber(limit_high),"]\n")
+    print('Logging prime numbers to file "primeNumbers.log" ...', end=" ")
+    separator = "\n"
+    with open('primeNumbers.log', 'a') as file:
+        for number in primes:
+            file.write(str(number) + separator)
+    print('Done.')
     print("Divisors in range: \n")
     print(divisors)
     reply = input("\nCheck if all divisors are prime ? (yes/no): ")
