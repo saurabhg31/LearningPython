@@ -44,6 +44,11 @@ def arePrimes(numbers):
     return notPrimes
 
 def main():
+    # environment vars
+    separator = " "
+    file = open("primeNumbers.log", 'a')
+
+    # code logic
     print('Program to calculate prime numbers in a given range (includes the range values itself).\n')
     limit_low = int(input("Enter lower limit of range: "))
     limit_high = int(input("Enter upper limit of range: "))
@@ -56,14 +61,10 @@ def main():
             primeCount += 1
             primes.append(limit_low)
             print(formatNumber(limit_low), end=" ")
+            file.write(str(limit_low) + separator)
         limit_low += 1
     print("\n")
     print(formatNumber(primeCount), " primes found in range [",formatNumber(lowVal),",",formatNumber(limit_high),"]\n")
-    print('Logging prime numbers to file "primeNumbers.log" ...', end=" ")
-    separator = "\n"
-    with open('primeNumbers.log', 'a') as file:
-        for number in primes:
-            file.write(str(number) + separator)
     print('Done.')
     print("Divisors in range: \n")
     print(divisors)
