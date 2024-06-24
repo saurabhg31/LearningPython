@@ -46,20 +46,20 @@ def arePrimes(numbers):
 def main():
     # environment vars
     separator = " "
-    file = open("primeNumbers.log", 'a')
+    file = open("primeNumbers.log", 'a') # opening a file in append mode (file must be present)
 
     # code logic
     print('Program to calculate prime numbers in a given range (includes the range values itself).\n')
     limit_low = int(input("Enter lower limit of range: "))
     limit_high = int(input("Enter upper limit of range: "))
     primeCount = 0
-    primes = []
+    # primes = []
     lowVal = limit_low
     print("\nPrime numbers are as follows:\n")
     while limit_low <= limit_high:
         if isPrime(limit_low):
             primeCount += 1
-            primes.append(limit_low)
+            # primes.append(limit_low)
             print(formatNumber(limit_low), end=" ")
             file.write(str(limit_low) + separator)
         limit_low += 1
