@@ -14,6 +14,29 @@ def isInt(x):
     except ValueError:
         return False
 
+def read_until_first_space_from_end(file_path, separator, encoding):
+    chars = ''
+    position = -2
+    file = open(file_path, 'rb')
+    # Move to the end of the file & seek
+    while chars.count(separator) != 2:
+        try:
+            file.seek(position, 2)
+            chars = file.read().decode(encoding)
+            position -= 1
+        except OSError:
+            # Reached beginning of file 
+            break
+    return chars.strip()
+
+def logFileCheck(filename = "primeNumbers.log", separator = ' ', encoding = 'utf-8'):
+    if not os.path.exists(filename):
+        raise Exception(" ".join(["File:", filename, "not present!"]))
+    lastPrime = read_until_first_space_from_end(filename, separator, encoding)
+    if lastPrime.isdigit():
+        lastPrime = int(lastPrime)
+    return lastPrime
+
 def isPrime(x, f=2):
     if x == 2 or x == 3:
         return True
@@ -46,11 +69,19 @@ def arePrimes(numbers):
 def main():
     # environment vars
     separator = " "
-    file = open("primeNumbers.log", 'a') # opening a file in append mode (file must be present)
+    encoding = 'utf-8'
+    filename = "primeNumbers.log"
 
     # code logic
-    print('Program to calculate prime numbers in a given range (includes the range values itself).\n')
-    limit_low = int(input("Enter lower limit of range: "))
+    lastLoggedPrime = logFileCheck(filename, separator, encoding) # doing log file checks
+    file = open(filename, 'a') # opening the file in append mode (file must be present)
+    print('\nProgram to calculate prime numbers in a given range (includes the range values itself).\n')
+    if lastLoggedPrime:
+        print('Last recorded prime: ', formatNumber(lastLoggedPrime))
+        limit_low = lastLoggedPrime + 2
+        print('Lower limit set to: ', lastLoggedPrime)
+    else:
+        limit_low = int(input("Enter lower limit of range: "))
     limit_high = int(input("Enter upper limit of range: "))
     primeCount = 0
     # primes = []
@@ -74,7 +105,10 @@ def main():
         nonPrimeDivisors = arePrimes(divisors)
         print("Divisors that are not primes:\n")
         print(nonPrimeDivisors)
-    print("\nMax Divisor:",divisors[-1],"\n")
+    if divisors:
+        print("\nMax Divisor:",divisors[-1],"\n")
+    else:
+        print("\nNo Divisors found!\n")
     return True
 
 while int(input("\nRun prime finding program ?\n1. Yes, 0. No\n")):
