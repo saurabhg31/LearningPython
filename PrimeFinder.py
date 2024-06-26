@@ -1,6 +1,7 @@
 import os
 import sys
 import math
+import threading
 
 divisors = []
 
@@ -27,6 +28,7 @@ def read_until_first_space_from_end(file_path, separator, encoding):
         except OSError:
             # Reached beginning of file 
             break
+    file.close()
     return chars.strip()
 
 def logFileCheck(filename = "primeNumbers.log", separator = ' ', encoding = 'utf-8'):
@@ -66,11 +68,19 @@ def arePrimes(numbers):
     print(primes, "Primes found:\n")
     return notPrimes
 
+def findPrimesInRangeViaThread(min, max, chunkname):
+    file = open('fileChunks/' + chunkname, 'w')
+    while min <= max:
+        if isPrime(min):
+            file.write(str(limit_low) + separator)
+        min += 1
+
 def main():
     # environment vars
     separator = " "
     encoding = 'utf-8'
     filename = "primeNumbers.log"
+    useMultipleThreads = False
 
     # code logic
     lastLoggedPrime = logFileCheck(filename, separator, encoding) # doing log file checks
@@ -87,29 +97,35 @@ def main():
     # primes = []
     lowVal = limit_low
     print("\nPrime numbers are as follows:\n")
-    while limit_low <= limit_high:
-        if isPrime(limit_low):
-            primeCount += 1
-            # primes.append(limit_low)
-            print(formatNumber(limit_low), end=" ")
-            file.write(str(limit_low) + separator)
-        limit_low += 1
-    print("\n")
-    print(formatNumber(primeCount), " primes found in range [",formatNumber(lowVal),",",formatNumber(limit_high),"]\n")
-    print('Done.')
-    print("Divisors in range: \n")
-    print(divisors)
-    reply = input("\nCheck if all divisors are prime ? (yes/no): ")
-    if reply == 'yes':
-        print("\nChecking if all divisors are prime...\n")
-        nonPrimeDivisors = arePrimes(divisors)
-        print("Divisors that are not primes:\n")
-        print(nonPrimeDivisors)
-    if divisors:
-        print("\nMax Divisor:",divisors[-1],"\n")
+    if useMultipleThreads:
+        # TODO: Add multithreading code
+        threading.Thread(target=findPrimesInRangeViaThread, args=(limit_low, limit_high, 'c1.log'), name='Thread-1')
+        threading.Thread(target=findPrimesInRangeViaThread, args=(limit_low, limit_high, 'c2.log'), name='Thread-2')
     else:
-        print("\nNo Divisors found!\n")
-    return True
+        while limit_low <= limit_high:
+            if isPrime(limit_low):
+                primeCount += 1
+                # primes.append(limit_low)
+                print(formatNumber(limit_low), end=" ")
+                file.write(str(limit_low) + separator)
+            limit_low += 1
+        file.close()
+        print("\n")
+        print(formatNumber(primeCount), " primes found in range [",formatNumber(lowVal),",",formatNumber(limit_high),"]\n")
+        print('Done.')
+        print("Divisors in range: \n")
+        print(divisors)
+        reply = input("\nCheck if all divisors are prime ? (yes/no): ")
+        if reply == 'yes':
+            print("\nChecking if all divisors are prime...\n")
+            nonPrimeDivisors = arePrimes(divisors)
+            print("Divisors that are not primes:\n")
+            print(nonPrimeDivisors)
+        if divisors:
+            print("\nMax Divisor:",divisors[-1],"\n")
+        else:
+            print("\nNo Divisors found!\n")
+        return True
 
 while int(input("\nRun prime finding program ?\n1. Yes, 0. No\n")):
     ch = int(input("1. Detect if a number is prime\n2. Find prime numbers within a given range\n"))
