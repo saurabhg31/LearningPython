@@ -45,7 +45,7 @@ def isPrime(x, f=2):
     elif x < 2:
         return False
     elif x > 2:
-        while f <= math.ceil(math.sqrt(x)):
+        while f <= math.floor(math.sqrt(x)):
             if x % f == 0:
                 # print("\n", x, " is divisible by ", f, "\n")
                 try:
@@ -96,6 +96,7 @@ def main():
     primeCount = 0
     # primes = []
     lowVal = limit_low
+    incrementSwitch = False
     print("\nPrime numbers are as follows:\n")
     if useMultipleThreads:
         # TODO: Add multithreading code
@@ -104,11 +105,12 @@ def main():
     else:
         while limit_low <= limit_high:
             if isPrime(limit_low):
+                incrementSwitch = True
                 primeCount += 1
                 # primes.append(limit_low)
                 print(formatNumber(limit_low), end=" ")
                 file.write(str(limit_low) + separator)
-            limit_low += 1
+            limit_low = limit_low + 2 if incrementSwitch else limit_low + 1
         file.close()
         print("\n")
         print(formatNumber(primeCount), " primes found in range [",formatNumber(lowVal),",",formatNumber(limit_high),"]\n")
