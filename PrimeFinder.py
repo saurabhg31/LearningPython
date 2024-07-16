@@ -39,8 +39,20 @@ def logFileCheck(filename = "primeNumbers.log", separator = ' ', encoding = 'utf
         lastPrime = int(lastPrime)
     return lastPrime
 
-def quickPrimeCheck(num):
-    return False
+def sumOfDigits(num):
+    sum = 0
+    i = 1
+    num = str(num)
+    while i < len(num)+1:
+        sum += int(num[0-i])
+        i += 1
+    return sum
+
+def quickPrimeChecks(num):
+    num = str(num)
+    if num[-1] == 2 or sumOfDigits(num) % 3 == 0: # checking for 2 & 3
+        return False
+    # TODO: add quick check for 7
 
 def isPrime(x, f=2):
     if x == 2 or x == 3:
@@ -48,10 +60,13 @@ def isPrime(x, f=2):
     elif x < 2:
         return False
     elif x > 2:
-        digitsBasedCheck = quickPrimeCheck(x)
+        digitsBasedCheck = quickPrimeChecks(x)
+        if digitsBasedCheck:
+            print("\nDetected not prime:", formatNumber(x), "Sum of digits:", sumOfDigits(x))
+            exit()
+            return False
         while f <= math.floor(math.sqrt(x)):
             if x % f == 0:
-                # print("\n", x, " is divisible by ", f, "\n")
                 try:
                     divisors.index(f)
                 except (ValueError, IndexError):
@@ -72,11 +87,11 @@ def arePrimes(numbers):
     print(primes, "Primes found:\n")
     return notPrimes
 
-def findPrimesInRangeViaThread(min, max, chunkname):
+def findPrimesInRangeViaThread(min, max, chunkname, separator = " "):
     file = open('fileChunks/' + chunkname, 'w')
     while min <= max:
         if isPrime(min):
-            file.write(str(limit_low) + separator)
+            file.write(str(min) + separator)
         min += 1
 
 def main():
@@ -107,18 +122,11 @@ def main():
         threading.Thread(target=findPrimesInRangeViaThread, args=(limit_low, limit_high, 'c1.log'), name='Thread-1')
         threading.Thread(target=findPrimesInRangeViaThread, args=(limit_low, limit_high, 'c2.log'), name='Thread-2')
     else:
-        # lineBreakAfterNums = 9
         while limit_low <= limit_high:
             if isPrime(limit_low):
                 incrementSwitch = True
                 primeCount += 1
-                # primes.append(limit_low)
                 print(formatNumber(limit_low), end=" || ")
-                # if lineBreakAfterNums == 0:
-                #     print("\n")
-                #     lineBreakAfterNums = 9
-                # else:
-                #     lineBreakAfterNums -= 1
                 file.write(str(limit_low) + separator)
             limit_low = limit_low + 2 if incrementSwitch else limit_low + 1
         file.close()
@@ -153,7 +161,7 @@ while int(input("\nRun prime finding program ?\n1. Yes, 0. No\n")):
         if isPrime(x):
             print("The number is prime\n")
         else:
-            print("The number is not prime\n")
+            print("The number is not prime.", "Divisible by:", divisors[-1], "\n\n", divisors[-1], "X", int(x/divisors[-1]), "=", x)
     elif ch == 2:
         main()
     else:

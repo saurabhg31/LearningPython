@@ -11,13 +11,15 @@ Dibrugarh University
 
 Contact: souvikparial@gmail.com
 
+Modifications & Optimizations by: Saurabh Ghosh (https://github.com/saurabhg31/)
+
 """
 
 from math import sqrt
 
 
 limit = 10000       # Use a limit
-prime = []          # prime is a list wher i will store all prime numbers upto a certain limit
+prime = []          # prime is a list where i will store all prime numbers upto a certain limit
 
 
 for i in range(limit):      # store all integers from 0 to (limit-1) in the list
@@ -34,7 +36,7 @@ for i in range(0,int(sqrt(limit)+1)):      # remove mulitples of each integer pr
             prime.remove(a)
         a = a + prime[i]
         
-print '\nAll primes upto {} are: \n'.format(limit), prime, '\n\n'
+print ('\nAll primes upto {} are: \n'.format(limit), prime, '\n\n')
 
 
 sum_list = [2, 3]
@@ -49,7 +51,7 @@ k = 2               # index of first number to be added, prime[2] = 5
 
 while sum <= limit:
     number = sum + increment
-    print prime.__contains__(number), 'for', number, '---> ', sum_list,'\n'
+    print (prime.__contains__(number), 'for', number, '---> ', sum_list,'\n')
     
     if increment == 2:
         increment = 3
