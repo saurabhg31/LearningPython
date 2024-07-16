@@ -105,8 +105,11 @@ def isPrime(x, f=2):
         if not digitsBasedCheck:
             return False
         while f <= math.floor(math.sqrt(x)):
-            if len(str(x)) > 3 and (f < quickTestsAvailableFor[-1] and f in quickTestsAvailableFor):
-                continue
+            # TODO: Bug is skipping algo: primes got missed in range [817,610,117 - 817,645,085]
+            # if len(str(x)) > 3 and (f < quickTestsAvailableFor[-1] and f in quickTestsAvailableFor):
+            #     print("\nSkipping:", formatNumber(x), "Current divisor:", formatNumber(f), "Divisor limit:", formatNumber(math.floor(math.sqrt(x))))
+            #     f += 1
+            #     continue
             if x % f == 0:
                 try:
                     divisors.index(f)
