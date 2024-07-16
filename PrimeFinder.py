@@ -39,12 +39,16 @@ def logFileCheck(filename = "primeNumbers.log", separator = ' ', encoding = 'utf
         lastPrime = int(lastPrime)
     return lastPrime
 
+def quickPrimeCheck(num):
+    return False
+
 def isPrime(x, f=2):
     if x == 2 or x == 3:
         return True
     elif x < 2:
         return False
     elif x > 2:
+        digitsBasedCheck = quickPrimeCheck(x)
         while f <= math.floor(math.sqrt(x)):
             if x % f == 0:
                 # print("\n", x, " is divisible by ", f, "\n")
@@ -103,12 +107,18 @@ def main():
         threading.Thread(target=findPrimesInRangeViaThread, args=(limit_low, limit_high, 'c1.log'), name='Thread-1')
         threading.Thread(target=findPrimesInRangeViaThread, args=(limit_low, limit_high, 'c2.log'), name='Thread-2')
     else:
+        # lineBreakAfterNums = 9
         while limit_low <= limit_high:
             if isPrime(limit_low):
                 incrementSwitch = True
                 primeCount += 1
                 # primes.append(limit_low)
-                print(formatNumber(limit_low), end=" ")
+                print(formatNumber(limit_low), end=" || ")
+                # if lineBreakAfterNums == 0:
+                #     print("\n")
+                #     lineBreakAfterNums = 9
+                # else:
+                #     lineBreakAfterNums -= 1
                 file.write(str(limit_low) + separator)
             limit_low = limit_low + 2 if incrementSwitch else limit_low + 1
         file.close()
@@ -148,4 +158,5 @@ while int(input("\nRun prime finding program ?\n1. Yes, 0. No\n")):
         main()
     else:
         print("Invalid choice input")
+
 exit()
