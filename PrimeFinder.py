@@ -48,11 +48,51 @@ def sumOfDigits(num):
         i += 1
     return sum
 
+# quickPrimeChecks: num will not be prime if this function return False for num passed as argument
+# @param string/integer num
+# @return boolean
 def quickPrimeChecks(num):
     num = str(num)
-    if num[-1] == 2 or sumOfDigits(num) % 3 == 0: # checking for 2 & 3
+    if num[-1] == 5: # checking for 5
+        divisors.append(5)
         return False
-    # TODO: add quick check for 7
+    if int(num[-1]) % 2 == 0: # checking for 2
+        divisors.append(2)
+        return False
+    if sumOfDigits(num) % 3 == 0: # checking for 3
+        divisors.append(3)
+        return False
+    # checking for 7
+    tmpNum = int(num[0:-1])
+    if (tmpNum - int(num[-1])) % 7 == 0:
+        divisors.append(7)
+        return False
+    # checking for 11
+    even_sum = odd_sum = 0
+    for index, digit in enumerate(num):
+        if index % 2 == 0:
+            odd_sum += int(digit)
+        else:
+            even_sum += int(digit)
+    if (odd_sum - even_sum) % 11 == 0:
+        divisors.append(11)
+        return False
+    # TODO: add code to check for 13
+    """
+    To check if a large number is divisible by 13, use the following mathematical rule:
+        1. Remove the last digit from the number.
+        2. Subtract 9 times the last digit from the remaining number.
+        3. Repeat the process with the result until the number is small enough to determine its divisibility by 13.
+        
+        Example: Check if 2028 is divisible by 13.
+
+        1. Separate the last digit: 202 and 8.
+        2. Calculate the new number: 202 - (9 X 8) = 202 = 130
+        3. Repeat the process until result (130) is below 200.
+        5. Check if the result is divisible by 13: 130 % 13 = 0 (remainder)
+        conclusion: 2028 is divisible by 13.
+    """
+    return True
 
 def isPrime(x, f=2):
     if x == 2 or x == 3:
@@ -61,9 +101,7 @@ def isPrime(x, f=2):
         return False
     elif x > 2:
         digitsBasedCheck = quickPrimeChecks(x)
-        if digitsBasedCheck:
-            print("\nDetected not prime:", formatNumber(x), "Sum of digits:", sumOfDigits(x))
-            exit()
+        if not digitsBasedCheck:
             return False
         while f <= math.floor(math.sqrt(x)):
             if x % f == 0:
