@@ -48,9 +48,11 @@ def sumOfDigits(num):
         i += 1
     return sum
 
-# quickPrimeChecks: num will not be prime if this function return False for num passed as argument
-# @param string/integer num
-# @return boolean
+"""
+    quickPrimeChecks: num will not be prime if this function return False for num passed as argument
+    @param string/integer num
+    @return boolean
+"""
 def quickPrimeChecks(num):
     num = str(num)
     if num[-1] == 5: # checking for 5
