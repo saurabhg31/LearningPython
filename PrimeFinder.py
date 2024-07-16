@@ -4,6 +4,7 @@ import math
 import threading
 
 divisors = []
+quickTestsAvailableFor = [2, 3, 5, 7, 11] # values within must always be in ascending order
 
 def formatNumber(number):
     return "{:,.0f}".format(number)
@@ -97,15 +98,15 @@ def quickPrimeChecks(num):
     return True
 
 def isPrime(x, f=2):
-    if x == 2 or x == 3:
-        return True
-    elif x < 2:
+    if x < 2:
         return False
     elif x > 2:
         digitsBasedCheck = quickPrimeChecks(x)
         if not digitsBasedCheck:
             return False
         while f <= math.floor(math.sqrt(x)):
+            if len(str(x)) > 3 and (f < quickTestsAvailableFor[-1] and f in quickTestsAvailableFor):
+                continue
             if x % f == 0:
                 try:
                     divisors.index(f)
