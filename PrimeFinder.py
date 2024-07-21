@@ -147,7 +147,7 @@ def main():
     print('\nProgram to calculate prime numbers in a given range (includes the range values itself).\n')
     if lastLoggedPrime:
         print('Last recorded prime: ', formatNumber(lastLoggedPrime))
-        choice = str(input('Use the above as lower limit ? (Y|N):'))
+        choice = str(input('Use the above as lower limit ? (Y|N): '))
         if choice == 'y' or choice == 'Y':
             limit_low = lastLoggedPrime + 2
             print('Lower limit set to: ', lastLoggedPrime)
